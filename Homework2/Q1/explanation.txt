@@ -1,0 +1,3 @@
+a) I only selected three columns and deleted duplicate rows in country to make table more direct. I added a title for table for easily understanding and realigned both title and data for a better formation. I changed fonts to Helvetica for easily reading and created white space for working.
+
+b) I scaled the color by measure name and scaled the size by measure value so that the reader can easily recognize the change of the data value and determine which set belongs to which crime. Also, in order to make it more clear, I dragged out the label of the measure name.

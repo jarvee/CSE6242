@@ -1,0 +1,8 @@
+Average Node Degree = 1.049
+The average node degree indicates that the number of relation of the edges. Here, I think most of the persons has one friend or follower.
+
+Diameter of the graph = 5
+The diameter of the graph indicates the maximum distances between all pairs of the nodes. Here, I think the longest graph distance between any two nodes in the network is 5.
+
+Average Path Length = 2.9536364118614395
+Here, I think the average graph distance between any two nodes in the network is 2.95.

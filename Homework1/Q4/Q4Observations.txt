@@ -1,0 +1,18 @@
+c(i):
+942
+
+c(ii): 
+toString(toDate(value),"EEEE, MMMMM dd, yyyy")
+
+c(iii):
+nominal data: propertyzoningdesc	
+ordinal data: transactiondate
+
+c(iv):
+not(toNumber(value)<=3.0000)
+
+c(v):
+chomp(value, "*")
+
+c(vi):
+openRefine also helps us filter the data based on a specified column. It is beneficial not only limited on the number, but also for text strings. We could get one’s all info data, including identical ones’, by typing names. We actually don’t need to care the uppercase or lowercase of the expression. It is pretty easy.

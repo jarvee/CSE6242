@@ -1,0 +1,1 @@
+I used the weight from force.nodes() and multiples 2 for scale since I noticed that different nodes have different weights. This value can classify the nodes. Also, some value is too small so I times 2 to make it looks more clear.

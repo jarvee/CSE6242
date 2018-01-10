@@ -1,0 +1,13 @@
+Line 17: Load and read the tsv files.
+
+Line 20: Split the file by the tab and then map the first element as key and third elements as the negative integer value for the source-weight pair. Then Filtering the weight value by smaller than -5. Finally, make the pair to be a DF.
+
+Line 21: Same as the line 20. But we select the second and third element from file as target-weight pair.
+
+Line 22: union the source and target pairs.
+
+Line 23: add the value by group the same key.
+
+Line 25: Use mkstring and map function to make key-value separated by tab.
+
+Line 29: Save output as the file.

@@ -1,0 +1,13 @@
+file = LOAD 's3://cse6242-2017fall-aws-small/*' AS (bigram:chararray, year:int, occurrences:int, books:int);
+
+sorting = ORDER file BY bigram ASC;
+
+result_filter = FILTER sorting BY (occurrences >= 200) AND (books >= 10);
+
+result_group = GROUP result_filter BY bigram;
+
+calculate = FOREACH result_group GENERATE $0, (double) SUM($1.occurrences)/SUM($1.books);
+
+out = LIMIT (ORDER calculate BY $1 DESC, $0 ASC) 10;
+
+STORE out INTO 's3://cse6242-jzhang950/output-small' USING PigStorage('\t');

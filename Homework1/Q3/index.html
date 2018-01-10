@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>HW1 Q3</title>
+		<script type="text/javascript" src="d3/d3.v3.min.js"></script>
+		<style type="text/css">
+			.axis path,
+			.axis line {
+				fill: none;
+				stroke: black;
+				shape-rendering: crispEdges;
+			}
+			
+			.axis text {
+				font-family: sans-serif;
+				font-size: 11px;
+			}
+
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript">
+
+			//Width and height
+			var w = 620;
+			var h = 380;
+			var padding = 80;
+			
+			
+			//Dynamic, random dataset
+			var dataset = [];					//Initialize empty array
+			for (var i = 0; i < 50; i++) {					//Loop numDataPoints times
+				var newNumber1 = Math.round(Math.random() * Math.random() * 100);	//New random integer
+				var newNumber2 = Math.round(Math.random() * Math.random() * 100);	//New random integer
+				dataset.push([newNumber1, newNumber2]);					//Add new number to array
+			}
+
+			//Create scale functions
+			var xScale = d3.scale.linear()
+								 .domain([0, d3.max(dataset, function(d) { return d[0]; })])
+								 .range([padding, w - padding * 2]);
+
+			var yScale = d3.scale.linear()
+								 .domain([0, d3.max(dataset, function(d) { return d[1]; })])
+								 .range([h - padding, padding]);
+
+			var rScale = d3.scale.linear()
+								 .domain([0, d3.max(dataset, function(d) { return d[0]*d[1]; })])
+
+		
+			//Define X axis
+			var xAxis = d3.svg.axis()
+							  .scale(xScale)
+							  .orient("bottom")
+							  .ticks(5);
+
+			//Define Y axis
+			var yAxis = d3.svg.axis()
+							  .scale(yScale)
+							  .orient("left")
+							  .ticks(5);
+
+			//Create SVG element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+
+			var sum = 0;
+
+			//Create circles
+			var circles = svg.selectAll("circle")
+			   				.data(dataset)
+			   				.enter()
+			   				.append("circle")
+			  				.attr("cx", function(d) {
+			   					return xScale(d[0]);
+			   				})
+			   				.attr("cy", function(d) {
+			   					return yScale(d[1]);
+			   				})
+			   				.attr("r", function(d) {
+			   					sum = sum + rScale(d[0])
+			   					return rScale(d[0]);
+			   				})
+			   				.style("fill", function(d) {
+			   					var avg = sum / 50
+			   					if(rScale(d[0])>avg)
+			   						return "blue"
+			   					else
+			   						return "green"
+			   				});
+
+			svg.append("text")
+				.attr("x", 280)
+				.attr("y", 50)
+				.attr("text-anchor", "middle")
+				.style("font-size", "16px")
+				.text("Jiawei Zhang jzhang950");
+
+			//Create X axis
+			svg.append("g")
+				.attr("class", "axis")
+				.attr("transform", "translate(0," + (h - padding) + ")")
+				.call(xAxis);
+			
+			//Create Y axis
+			svg.append("g")
+				.attr("class", "axis")
+				.attr("transform", "translate(" + padding + ",0)")
+				.call(yAxis);
+
+		</script>
+	</body>
+</html>

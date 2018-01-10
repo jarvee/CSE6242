@@ -1,0 +1,1 @@
+Instead of using linear regression algorithm model, I choose the poisson regression model here to predict the price. The results get changed because the poisson regression model is a log linear model. It predicts the log of the expected value for price. Different from the linear regression. That's reason for result change.

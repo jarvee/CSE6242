@@ -1,0 +1,251 @@
+[
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column propertyzoningdesc",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "propertyzoningdesc",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "EMR1",
+          "EMR1*"
+        ],
+        "to": "EMR1"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "HAR3*",
+          "HAR3"
+        ],
+        "to": "HAR3*"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "BHR475",
+          "BHR475*"
+        ],
+        "to": "BHR475"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "LCR1*",
+          "LCR1"
+        ],
+        "to": "LCR1*"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "LCR2*",
+          "LCR2"
+        ],
+        "to": "LCR2*"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "LBPD1",
+          "LBPD1*"
+        ],
+        "to": "LBPD1"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "SOR109",
+          "SOR109*"
+        ],
+        "to": "SOR109"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "LRR7000*",
+          "LRR7000"
+        ],
+        "to": "LRR7000*"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "WHC2",
+          "WHC2*"
+        ],
+        "to": "WHC2"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "SHR4*",
+          "SHR4"
+        ],
+        "to": "SHR4*"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "LCA11*",
+          "LCA11"
+        ],
+        "to": "LCA11*"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "TCR172",
+          "TCR172*"
+        ],
+        "to": "TCR172"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "SFR2*",
+          "SFR2"
+        ],
+        "to": "SFR2*"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "LCA22*",
+          "LCA22"
+        ],
+        "to": "LCA22*"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "LBCB",
+          "LBCB*"
+        ],
+        "to": "LBCB"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "PDA2*",
+          "PDA2"
+        ],
+        "to": "PDA2*"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "LCRA7OOO",
+          "LCRA7OOO*"
+        ],
+        "to": "LCRA7OOO"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "PDR3*",
+          "PDR3"
+        ],
+        "to": "PDR3*"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "LHRA1*",
+          "LHRA1"
+        ],
+        "to": "LHRA1*"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "PDR1*",
+          "PDR1"
+        ],
+        "to": "PDR1*"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "LBR4N",
+          "LBR4N*"
+        ],
+        "to": "LBR4N"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "PDSP",
+          "PDSP*"
+        ],
+        "to": "PDSP"
+      }
+    ]
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column transactiondate using expression grel:toString(toDate(value),\"EEEE, MMMMM dd, yyyy\")",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "transactiondate",
+    "expression": "grel:toString(toDate(value),\"EEEE, MMMMM dd, yyyy\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column bedroomflag at index 8 based on column bedroomcnt using expression grel:not(toNumber(value)<=3.0000)",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "bedroomflag",
+    "columnInsertIndex": 8,
+    "baseColumnName": "bedroomcnt",
+    "expression": "grel:not(toNumber(value)<=3.0000)",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column propertyzoningdesc using expression grel:chomp(value, \"*\")",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "propertyzoningdesc",
+    "expression": "grel:chomp(value, \"*\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  }
+]

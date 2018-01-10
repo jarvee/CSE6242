@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script src="../lib/d3.v3.min.js"></script>
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+</style>
+<body>
+<div id="graphic"></div>
+<script>
+
+var data=[{club:'Manchester United',value:{year_2013:3165, year_2014:2810, year_2015:3100, year_2016:3317, year_2017:4583}},
+{club:'Chelsea',value:{year_2013:901, year_2014:868, year_2015:1370, year_2016:1661, year_2017:1845}},
+{club:'Manchester City',value:{year_2013:689, year_2014:863, year_2015:1380, year_2016:1921, year_2017:2083}},
+{club:'Liverpool',value:{year_2013:651, year_2014:704, year_2015:982, year_2016:1548, year_2017:1492}},
+{club:'Arsenal',value:{year_2013:1326, year_2014:1331, year_2015:1310, year_2016:2017, year_2017:1932}}];
+
+
+var w = 960;
+var h = 500;
+
+var svg = d3.select("#graphic").append("svg")
+            .attr("width", w)
+            .attr("height", h)
+            .append("g")
+            .attr("transform", "translate(" + 140 + "," + 80 + ")");
+
+var xScale = d3.scale.linear()
+            .range([0, w/2])
+            .domain([0, d3.max(data, function (d) {
+                return d["value"]["year_2013"]+d["value"]["year_2014"]+d["value"]["year_2015"]+d["value"]["year_2016"]+d["value"]["year_2017"];
+            })]);
+
+var yScale = d3.scale.ordinal()
+            .domain(["Manchester United", "Chelsea", "Manchester City", "Liverpool", "Arsenal"])
+            .rangePoints([150, 0]);
+
+//y axis
+var yAxis = d3.svg.axis()
+            .scale(yScale)
+            .tickSize(0)
+            .orient("left");
+
+
+svg.append("g")
+   .attr("class", "y axis")
+   .call(yAxis);
+
+//create bar chart
+var barChart = svg.selectAll(".bar")
+                  .data(data).enter()
+                  .append("g");
+
+barChart.append("rect")
+        .attr("class", "bar")
+        .attr("x", 10)
+        .attr("y", function (d) {
+          return yScale(d["club"])-12;
+        })
+        .attr("height", 30)
+        .attr("width", function (d) {
+          return xScale(d["value"]["year_2013"]+d["value"]["year_2014"]+d["value"]["year_2015"]+d["value"]["year_2016"]+d["value"]["year_2017"]);
+        })
+        .style("fill", "lightgrey")
+        .on("mouseover", mouseover)                  
+        .on("mouseout", function(d) {
+          d3.select("#graph").remove();
+          d3.select(this).style("fill", "lightgrey");
+        });
+
+barChart.append("text")
+        .attr("class", "label")
+        .attr("x", 14)
+        .attr("y", function(d){
+          return yScale(d["club"])+2;
+        })
+        .attr("dy", ".35em")
+        .style("fill", "white")
+        .text("$")
+        .text(function(d){
+          return "$" + (d["value"]["year_2013"]+d["value"]["year_2014"]+d["value"]["year_2015"]+d["value"]["year_2016"]+d["value"]["year_2017"]);
+        });
+
+function mouseover(d) {
+  d3.select(this).style("fill", "lightblue");
+
+  var dataset = [];
+  dataset.push(["2013", d["value"]["year_2013"]]);
+  dataset.push(["2014", d["value"]["year_2014"]]);
+  dataset.push(["2015", d["value"]["year_2015"]]);
+  dataset.push(["2016", d["value"]["year_2016"]]);
+  dataset.push(["2017", d["value"]["year_2017"]]);
+
+  var x = d3.scale.ordinal().domain(["2013", "2014", "2015", "2016", "2017"]).rangePoints([0, 200]);
+  var y = d3.scale.linear().range([180, 0]).domain([0, d3.max(dataset, function (d) {return d[1];})]);
+  var line = d3.svg.line().x(function(d) { return x(d[0]);}).y(function(d) { return y(d[1]);});
+
+  var lineChart =svg.attr("width", 400)
+                    .attr("height", 200)
+                    .append("g")
+                    .attr("id", "graph")
+                    .attr("transform", "translate(" + 600 + "," + -40 + ")");
+
+  lineChart.append("path").datum(dataset).attr("id", "myText").attr("class", "line").attr("d", line);
+
+  var xA = d3.svg.axis().scale(x).orient("bottom").ticks(5);
+  var yA = d3.svg.axis().scale(y).orient("left").ticks(7);
+        
+  lineChart.append("g")
+           .attr("class", "x axis")
+           .attr("transform", "translate(" + 0 + "," + 180 + ")")
+           .call(xA)
+           .style("stroke", "black")
+           .style("fill", "none")
+           .append("text")
+           .attr("class", "label")
+           .attr("x", 200)
+           .attr("y", -6)
+           .style("text-anchor", "end")
+           .text("Year");
+
+  lineChart.append("g")
+           .attr("class", "y axis")
+           .call(yA)
+           .style("stroke", "black")
+           .style("fill", "none")
+           .append("text")
+           .attr("class", "label")
+           .attr("transform", "rotate(-90)")
+           .attr("y", 6)
+           .attr("dy", ".71em")
+           .style("text-anchor", "end")
+           .text("Value");
+}
+
+
+</script>
+</body>
+</html>

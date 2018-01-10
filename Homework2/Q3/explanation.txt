@@ -1,0 +1,6 @@
+a2.
+I think the plasma glucose vs insulin makes a better at separating the classes because we can see from the plot, where the negative classes are in the left bottom of the graph and the positive classes are in the right side. We can separate them clearly. However, the the BMI and blood pressure are all in the middle of the graph.
+
+c.
+To make the plots more separately across the domain and range, I will choose the square root scale.
+To make the plots more concentrated across the graph, I will choose log scale.
